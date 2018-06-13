@@ -1,0 +1,19 @@
+name: NetherPortals
+version: 1.0
+author: Rene Hampoelz
+website: hampoelz.net
+
+main: net.hampoelz.NetherPortals.main.Main
+
+softdepend: [MultiverseCore, StayPut]
+
+commands:
+  netherportals:
+    usage: /NetherPortals reload
+    description: Reload the config file
+    aliases: [np]
+    
+permissions:
+  NetherPortals.*:
+    children:
+      NetherPortals.reload: true
