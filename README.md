@@ -10,7 +10,7 @@ If you use Multiverse-NetherPortals, please delete it, because it can lead to er
 - Permissions
 - In-game commands
 - Multi-version support
-- [StayPut](https://www.spigotmc.org/resources/stayput.34848/) Support
+- [StayPut](https://www.spigotmc.org/resources/stayput.34848/) Support (Experimental)
 - Open-Source
 - Support
 
