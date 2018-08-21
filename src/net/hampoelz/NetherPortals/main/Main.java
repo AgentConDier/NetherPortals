@@ -12,6 +12,7 @@ public class Main extends JavaPlugin
 {
 
 	public static Boolean useStayPut = false;
+	public static Boolean debug = false;
 	
 	@Override
 	public void onEnable()
