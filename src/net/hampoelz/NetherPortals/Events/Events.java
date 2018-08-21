@@ -23,7 +23,7 @@ public class Events  implements Listener
 	{
 		if (Main.useStayPut)
 		{
-			Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + event.getPlayer().getName() + " " + Config.getDefaultWorld());
+			Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + Config.getDefaultWorld() + " " + event.getPlayer().getName());
 		}
 	}
 	
@@ -31,15 +31,44 @@ public class Events  implements Listener
     public void onPortal(PlayerPortalEvent event)
     {
 		Player p = event.getPlayer();
-		String w = p.getWorld().getName();
+		String w = event.getFrom().getWorld().getName();
 		
-		PortalType type = PortalType.ENDER;
+		if (Main.debug) {
+			System.out.println("[NetherPortals] Portal Event Details:");
+			System.out.println("[NetherPortals] From: "+w+" "+event.getFrom().getBlockX()+" "+event.getFrom().getBlockY()+" "+event.getFrom().getBlockZ());
+			System.out.println("[NetherPortals] To: "+event.getTo());//+" "+event.getTo().getBlockX()+" "+event.getTo().getBlockY()+" "+event.getTo().getBlockZ());
+		}
 		
-		if (event.getFrom().getBlock().getType() == Material.NETHER_PORTAL) // called NETHER_PORTAL in 1.13
-		{
-            type = PortalType.NETHER;
-            event.useTravelAgent(true);
-        }
+		PortalType type = null;
+		
+		int x = event.getFrom().getBlockX();
+		int y = event.getFrom().getBlockZ();
+		Location blockCheckLocation = event.getFrom();
+		
+		blockcheck:for (int i = -1; i < 2; i++) { // checks in a 3x3 space around the player for portal blocks to determine the portal type
+			for (int j = -1; j < 2; j++) {
+				blockCheckLocation.setX(x+i);
+				blockCheckLocation.setZ(y+j);
+				if (Main.debug) {
+					System.out.println("[NetherPortals] Checking block "+((i+1)*3+(j+2))+"/9 at "+blockCheckLocation.getX()+" "+blockCheckLocation.getBlockY()+" "+blockCheckLocation.getZ()+": Is "+blockCheckLocation.getBlock().getType());
+				}
+				if (blockCheckLocation.getBlock().getType() == Material.NETHER_PORTAL) {
+		            type = PortalType.NETHER;
+		            break blockcheck;
+		        } else if (blockCheckLocation.getBlock().getType() == Material.END_PORTAL) {
+		        	type = PortalType.ENDER;
+		            break blockcheck;
+		        }
+			}
+		}
+		
+		if (Config.useTravelAgent()) {
+			event.useTravelAgent(true);
+		}
+		
+		if (Main.debug) {
+			System.out.println("[NetherPortals] "+p.getName()+" used a "+blockCheckLocation.getBlock().getType()+" and will be teleported from "+w+" to the appropriate dimension");
+		}
 			
 		if (type == PortalType.NETHER)
 		{
@@ -54,21 +83,35 @@ public class Events  implements Listener
 					{
 						if (Bukkit.getWorld(to) != null)
 						{
-							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + event.getPlayer().getName() + " " + to);
+							/* DEPRECATED
+							String command = "wm tp " + to + " " + event.getPlayer().getName();
+							if (Main.debug) {
+								System.out.println("[NetherPortals] about to run teleport command: "+command);
+							}
+							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
+							*/
+							if (Config.useTravelAgent()) {
+								Location target = p.getLocation();
+								target.setWorld(Bukkit.getWorld(to));
+								if (Bukkit.getWorld(to).getEnvironment() == World.Environment.NETHER) {
+									target.setX(Math.floor(target.getX()/8));
+									target.setZ(Math.floor(target.getZ()/8));
+								} else if (Bukkit.getWorld(to).getEnvironment() == World.Environment.NORMAL) {
+									target.setX(Math.floor(target.getX()*8));
+									target.setZ(Math.floor(target.getZ()*8));
+								}
+								event.setTo(target);
+							} else {
+								event.setTo(Bukkit.getWorld(to).getSpawnLocation());
+							}
+							if (Config.doAfterTeleport()) {
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', Config.getTeleport()).replace("%w%", to));
+							}
 						}
 						else
 						{
 							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThe specified world does not exist!"));
 						}
-						
-						World world = p.getLocation().getWorld();
-						double X = p.getLocation().getX();
-						double Y = p.getLocation().getY();
-						double Z = p.getLocation().getZ();
-						
-						Location location = new Location(world, X + 2, Y, Z + 2);
-						p.teleport(location);
-						
 					}
 				}
 			}
@@ -87,20 +130,34 @@ public class Events  implements Listener
 					{		
 						if (Bukkit.getWorld(to) != null)
 						{
-							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + event.getPlayer().getName() + " " + to);
+							/* DEPRECATED
+							String command = "wm tp " + to + " " + event.getPlayer().getName();
+							if (Main.debug) {
+								System.out.println("[NetherPortals] about to run teleport command: "+command);
+							}
+							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), command);
+							*/
+							if (Config.useTravelAgent()) {
+								if (Bukkit.getWorld(to).getEnvironment() == World.Environment.THE_END) {
+									Location portalTarget = new Location(Bukkit.getWorld(to), 100, 48, 0);
+									Location target = new Location(Bukkit.getWorld(to), 100, 48, 0); // that's not how the wiki says it works, but it works
+									event.getPortalTravelAgent().createPortal(portalTarget); // creates obsidian platform
+									p.teleport(target); // teleport the player onto the platform
+								} else if (Bukkit.getWorld(to).getEnvironment() == World.Environment.NORMAL) {
+									p.teleport(Bukkit.getWorld(to).getSpawnLocation());
+								}
+							} else {
+								p.teleport(Bukkit.getWorld(to).getSpawnLocation());
+							}
+							if (Config.doAfterTeleport()) {
+								p.sendMessage(ChatColor.translateAlternateColorCodes('&', Config.getTeleport()).replace("%w%", to));
+							}
+							
 						}
 						else
 						{
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThe specified world does not exist!"));
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', Config.getWorldError()));
 						}
-						
-						World world = p.getLocation().getWorld();
-						double X = p.getLocation().getX();
-						double Y = p.getLocation().getY();
-						double Z = p.getLocation().getZ();
-						
-						Location location = new Location(world, X + 5, Y, Z + 5);
-						p.teleport(location);
 					}
 				}
 			}
