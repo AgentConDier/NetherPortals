@@ -11,22 +11,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPortalEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import net.hampoelz.NetherPortals.main.Config;
 import net.hampoelz.NetherPortals.main.Main;
 
 public class Events  implements Listener
 {
-	@EventHandler
-	public void onQuit(PlayerQuitEvent event)
-	{
-		if (Main.useStayPut)
-		{
-			Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + Config.getDefaultWorld() + " " + event.getPlayer().getName());
-		}
-	}
-	
 	@EventHandler
     public void onPortal(PlayerPortalEvent event)
     {
