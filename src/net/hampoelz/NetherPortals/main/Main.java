@@ -21,7 +21,7 @@ public class Main extends JavaPlugin
         }
 		else
         {
-            throw new RuntimeException("[NetherPortals] Could not find AsyncWorldManager!! Plugin will likely not work without it! (If you want to try, remove the line that thrown this exception)");
+            throw new RuntimeException("[NetherPortals] Could not find AsyncWorldManager!! Plugin will likely not work without it! (If you want to try, remove the line that throws this exception)");
         }
 		
 		getCommands();
