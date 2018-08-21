@@ -16,7 +16,7 @@ public class Main extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		if (Bukkit.getPluginManager().isPluginEnabled("Multiverse-Core"))
+		if (Bukkit.getPluginManager().isPluginEnabled("AsyncWorldManager"))
 		{
 			if (Bukkit.getPluginManager().isPluginEnabled("StayPut"))
 			{
@@ -27,7 +27,7 @@ public class Main extends JavaPlugin
         }
 		else
         {
-            throw new RuntimeException("Could not find Multiverse-Core!! Plugin can not work without it!");
+            throw new RuntimeException("Could not find AsyncWorldManager!! Plugin can not work without it!");
         }
 		
 		getCommands();
