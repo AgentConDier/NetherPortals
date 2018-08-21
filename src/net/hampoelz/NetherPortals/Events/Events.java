@@ -23,7 +23,7 @@ public class Events  implements Listener
 	{
 		if (Main.useStayPut)
 		{
-			Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "mv tp " + event.getPlayer().getName() + " " + Config.getDefaultWorld());
+			Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + event.getPlayer().getName() + " " + Config.getDefaultWorld());
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class Events  implements Listener
 					{
 						if (Bukkit.getWorld(to) != null)
 						{
-							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "mv tp " + event.getPlayer().getName() + " " + to);
+							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + event.getPlayer().getName() + " " + to);
 						}
 						else
 						{
@@ -87,7 +87,7 @@ public class Events  implements Listener
 					{		
 						if (Bukkit.getWorld(to) != null)
 						{
-							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "mv tp " + event.getPlayer().getName() + " " + to);
+							Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "wm tp " + event.getPlayer().getName() + " " + to);
 						}
 						else
 						{
