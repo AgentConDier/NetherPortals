@@ -5,7 +5,7 @@ website: hampoelz.net
 
 main: net.hampoelz.NetherPortals.main.Main
 
-softdepend: [MultiverseCore, StayPut]
+softdepend: [AsyncWorldManager, StayPut]
 
 commands:
   netherportals:
