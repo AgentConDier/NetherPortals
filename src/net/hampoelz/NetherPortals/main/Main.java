@@ -10,8 +10,6 @@ import net.hampoelz.NetherPortals.Events.Events;
 
 public class Main extends JavaPlugin
 {
-
-	public static Boolean useStayPut = false;
 	public static Boolean debug = false;
 	
 	@Override
@@ -19,16 +17,11 @@ public class Main extends JavaPlugin
 	{
 		if (Bukkit.getPluginManager().isPluginEnabled("AsyncWorldManager"))
 		{
-			if (Bukkit.getPluginManager().isPluginEnabled("StayPut"))
-			{
-				useStayPut = true;
-			}
-			
 			Bukkit.getPluginManager().registerEvents(new Events(), this);
         }
 		else
         {
-            throw new RuntimeException("Could not find AsyncWorldManager!! Plugin can not work without it!");
+            throw new RuntimeException("[NetherPortals] Could not find AsyncWorldManager!! Plugin will likely not work without it! (If you want to try, remove the line that thrown this exception)");
         }
 		
 		getCommands();
