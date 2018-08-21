@@ -100,7 +100,7 @@ public class Events  implements Listener
 						}
 						else
 						{
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThe specified world does not exist!"));
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', Config.getWorldError()));
 						}
 					}
 				}
