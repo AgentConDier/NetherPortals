@@ -35,7 +35,7 @@ public class Events  implements Listener
 		
 		PortalType type = PortalType.ENDER;
 		
-		if (event.getFrom().getBlock().getType() == Material.PORTAL)
+		if (event.getFrom().getBlock().getType() == Material.NETHER_PORTAL) // called NETHER_PORTAL in 1.13
 		{
             type = PortalType.NETHER;
             event.useTravelAgent(true);
