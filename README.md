@@ -4,7 +4,7 @@ This plugin is similar to Multiverse-NetherPortals, but is designed to work with
 If you use Multiverse-NetherPortals, please delete it, because it can lead to errors! (Also wtf this is for AsyncWorldManager what do you want with Multiverse?) But you can easily copy your Worlds / Portal list from Multiverse-NetherPortals to the config file of this plugin.
 
 ## Features:
-- Multiverse Nether Portals but simpler and for AsyncWorldManager
+- Multiverse-NetherPortals but simpler and for AsyncWorldManager
 - Config
 - Messages are completely editable
 - Permissions
