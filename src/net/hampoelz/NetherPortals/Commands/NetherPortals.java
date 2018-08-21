@@ -61,11 +61,3 @@ public class NetherPortals implements CommandExecutor
 		return true;
 	}
 }
-
-/* Commit Notes
- * Added Message for wrong Number of Arguments
- * Fixed crash because of wrong array index (aka fixed crash if less than two arguments, but only one argument is needed)
- * Return false if command invalid
- * General readability improvements and better coding logic
- * Added config values for reload failure/success messages
- */
