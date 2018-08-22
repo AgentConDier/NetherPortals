@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerPortalEvent;
 import net.hampoelz.NetherPortals.main.Config;
 import net.hampoelz.NetherPortals.main.Main;
 
-public class Events  implements Listener
+public class Events implements Listener
 {
 	@EventHandler
     public void onPortal(PlayerPortalEvent event)
