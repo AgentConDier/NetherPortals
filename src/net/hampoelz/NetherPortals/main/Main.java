@@ -15,14 +15,12 @@ public class Main extends JavaPlugin
 	@Override
 	public void onEnable()
 	{
-		if (Bukkit.getPluginManager().isPluginEnabled("AsyncWorldManager"))
+		if (!Bukkit.getPluginManager().isPluginEnabled("AsyncWorldManager"))
 		{
-			Bukkit.getPluginManager().registerEvents(new Events(), this);
-        }
-		else
-        {
             Bukkit.getLogger().warning("[NetherPortals] Could not find AsyncWorldManager!! Plugin will likely not work without it!");
         }
+		
+		Bukkit.getPluginManager().registerEvents(new Events(), this);
 		
 		getCommands();
 		
