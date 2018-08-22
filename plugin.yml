@@ -6,7 +6,7 @@ website: hampoelz.net
 
 main: net.hampoelz.NetherPortals.main.Main
 
-softdepend: [AsyncWorldManager, StayPut]
+softdepend: [AsyncWorldManager]
 
 commands:
   netherportals:
